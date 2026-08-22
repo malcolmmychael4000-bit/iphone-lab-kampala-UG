@@ -57,6 +57,7 @@ export const PartsProductsSection: React.FC<PartsProductsSectionProps> = ({
   const [loading, setLoading] = useState(false);
   const [activeCategory, setActiveCategory] = useState<string>('All');
   const [searchQuery, setSearchQuery] = useState('');
+  const [displayLimit, setDisplayLimit] = useState<number>(8);
   const [selectedScreenTier, setSelectedScreenTier] = useState<Record<string, 'Incell' | 'OLED'>>({});
 
   const categories: { label: string; value: string; icon: React.FC<{ className?: string }> }[] = [
@@ -351,10 +352,11 @@ export const PartsProductsSection: React.FC<PartsProductsSectionProps> = ({
             </button>
           </div>
         ) : (
-          /* Products Grid with Responsive Multi-Device Support */
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-            {filteredParts.map((part) => {
-              const isScreen = part.category === 'Screens';
+          <>
+            {/* Products Grid with Responsive Multi-Device Support */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+              {filteredParts.slice(0, searchQuery ? undefined : displayLimit).map((part) => {
+                const isScreen = part.category === 'Screens';
               
               const hasIncell = isScreen && (part.screenTier === 'Incell' || part.screenTier === 'Both' || Boolean(part.incellPriceUGX));
               const hasOled = isScreen && (part.screenTier === 'OLED' || part.screenTier === 'Both' || Boolean(part.oledPriceUGX));
@@ -618,7 +620,22 @@ export const PartsProductsSection: React.FC<PartsProductsSectionProps> = ({
               );
             })}
           </div>
-        )}
+
+          {/* Load More Parts Button for Smooth Progressive Mobile Browsing */}
+          {!searchQuery && filteredParts.length > displayLimit && (
+            <div className="text-center mt-10">
+              <button
+                type="button"
+                onClick={() => setDisplayLimit((prev) => prev + 12)}
+                className="px-6 py-3.5 rounded-2xl bg-[#1D9BB5] hover:bg-[#188094] text-white font-bold text-sm shadow-xl shadow-[#1D9BB5]/25 transition-all inline-flex items-center gap-2"
+              >
+                <Package className="w-4 h-4" />
+                <span>Load More Genuine Parts ({filteredParts.length - displayLimit} remaining)</span>
+              </button>
+            </div>
+          )}
+        </>
+      )}
 
         {/* Bottom Supply Notice */}
         <div className="mt-12 text-center p-6 rounded-2xl bg-[#1F3864] text-white max-w-4xl mx-auto shadow-xl">

@@ -15,7 +15,7 @@ export const Logo: React.FC<LogoProps> = ({
     <div className={`inline-flex items-center gap-2.5 sm:gap-3 select-none ${className}`}>
       {/* Official Emblem Logo Image */}
       <img
-        src={isDarkMode ? '/logo-dark.png' : '/logo-light.png'}
+        src={isDarkMode ? '/logo-dark.svg' : '/logo-light.svg'}
         alt="iPhone Lab UG"
         width="38"
         height="38"

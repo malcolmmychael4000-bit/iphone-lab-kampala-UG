@@ -13,6 +13,7 @@ export const ContactSection: React.FC<ContactSectionProps> = ({ isDarkMode }) =>
   const [success, setSuccess] = useState(false);
   const [errorMsg, setErrorMsg] = useState('');
   const [cooldownSeconds, setCooldownSeconds] = useState(0);
+  const [showLiveMap, setShowLiveMap] = useState(false);
 
   useEffect(() => {
     if (cooldownSeconds <= 0) return;
@@ -188,27 +189,63 @@ export const ContactSection: React.FC<ContactSectionProps> = ({ isDarkMode }) =>
               </div>
             </div>
 
-            {/* Embedded Interactive Google Map */}
-            <div className="rounded-3xl overflow-hidden border border-white/10 shadow-xl h-72 relative group">
-              <iframe
-                title="iPhone Lab UG Location Map at New Pioneer Mall Kampala"
-                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3989.758810967396!2d32.5786111!3d0.3155556!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x177dbb830d97b91b%3A0xcf95b54203673c24!2sPioneer%20Mall%2C%20Kampala!5e0!3m2!1sen!2sug!4v1700000000000!5m2!1sen!2sug"
-                width="600"
-                height="300"
-                style={{ border: 0, width: '100%', height: '100%' }}
-                allowFullScreen={false}
-                loading="lazy"
-                referrerPolicy="no-referrer-when-downgrade"
-              />
-              <a
-                href="https://maps.google.com/?q=New+Pioneer+Mall+Kampala"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="absolute bottom-3 right-3 bg-[#1F3864]/90 hover:bg-[#1F3864] text-white text-xs font-bold px-3.5 py-2 rounded-xl border border-white/20 shadow-lg flex items-center gap-1.5 backdrop-blur-md transition-all"
-              >
-                <MapPin className="w-3.5 h-3.5 text-[#1D9BB5]" />
-                <span>Open in Maps / Get Directions</span>
-              </a>
+            {/* Embedded Interactive Google Map with High Performance On-Demand Loader */}
+            <div className="rounded-3xl overflow-hidden border border-white/10 shadow-xl h-72 relative group bg-[#0A1120] flex items-center justify-center">
+              {showLiveMap ? (
+                <iframe
+                  title="iPhone Lab UG Location Map at New Pioneer Mall Kampala"
+                  src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3989.758810967396!2d32.5786111!3d0.3155556!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x177dbb830d97b91b%3A0xcf95b54203673c24!2sPioneer%20Mall%2C%20Kampala!5e0!3m2!1sen!2sug!4v1700000000000!5m2!1sen!2sug"
+                  width="600"
+                  height="300"
+                  style={{ border: 0, width: '100%', height: '100%' }}
+                  allowFullScreen={false}
+                  loading="lazy"
+                  referrerPolicy="no-referrer-when-downgrade"
+                />
+              ) : (
+                <div className="w-full h-full p-6 flex flex-col items-center justify-center text-center bg-gradient-to-b from-[#1F3864]/50 to-[#0A0A0A] relative">
+                  {/* Subtle Grid Accent */}
+                  <div className="absolute inset-0 bg-[radial-gradient(#1D9BB5_1px,transparent_1px)] [background-size:16px_16px] opacity-20 pointer-events-none" />
+                  
+                  <div className="w-12 h-12 rounded-2xl bg-[#1D9BB5]/20 border border-[#1D9BB5]/40 flex items-center justify-center mb-3 shadow-lg relative z-10 animate-bounce">
+                    <MapPin className="w-6 h-6 text-[#1D9BB5]" />
+                  </div>
+                  <h4 className="text-white font-bold text-sm mb-1 relative z-10">New Pioneer Mall · Shop PB86</h4>
+                  <p className="text-slate-400 text-xs mb-4 max-w-xs relative z-10">
+                    Kampala, Central Division, Uganda · Ground Level
+                  </p>
+                  
+                  <div className="flex items-center gap-3 relative z-10">
+                    <button
+                      type="button"
+                      onClick={() => setShowLiveMap(true)}
+                      className="glow-btn text-white text-xs font-bold px-4 py-2 rounded-xl shadow-lg"
+                    >
+                      Load Interactive Map
+                    </button>
+                    <a
+                      href="https://maps.google.com/?q=New+Pioneer+Mall+Kampala"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="bg-white/10 hover:bg-white/20 text-white text-xs font-bold px-3.5 py-2 rounded-xl border border-white/20 transition-all flex items-center gap-1.5"
+                    >
+                      <span>Open in Maps App</span>
+                    </a>
+                  </div>
+                </div>
+              )}
+              
+              {showLiveMap && (
+                <a
+                  href="https://maps.google.com/?q=New+Pioneer+Mall+Kampala"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="absolute bottom-3 right-3 bg-[#1F3864]/90 hover:bg-[#1F3864] text-white text-xs font-bold px-3.5 py-2 rounded-xl border border-white/20 shadow-lg flex items-center gap-1.5 backdrop-blur-md transition-all z-20"
+                >
+                  <MapPin className="w-3.5 h-3.5 text-[#1D9BB5]" />
+                  <span>Open in Maps App</span>
+                </a>
+              )}
             </div>
           </div>
 
