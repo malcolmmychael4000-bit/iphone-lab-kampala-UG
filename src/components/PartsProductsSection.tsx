@@ -36,11 +36,11 @@ function getScreenDisplayImage(part: PartProduct, tier: 'Incell' | 'OLED'): stri
   if (tier === 'Incell') {
     if (customIncell) return customIncell;
     if (part.screenTier === 'Incell' && mainImage) return mainImage;
-    return `/images/parts/part-screen-${slug}-incell.jpg`;
+    return `/images/parts/part-screen-${slug}-incell.svg`;
   } else {
     if (customOled) return customOled;
     if (part.screenTier === 'OLED' && mainImage) return mainImage;
-    return `/images/parts/part-screen-${slug}-oled.jpg`;
+    return `/images/parts/part-screen-${slug}-oled.svg`;
   }
 }
 
@@ -387,9 +387,22 @@ export const PartsProductsSection: React.FC<PartsProductsSectionProps> = ({
 
               const isOutOfStock = part.stockStatus === 'Out of Stock';
 
+              const batterySlug = part.id.replace('part-battery-', '');
               const displayImage = isScreen
                 ? getScreenDisplayImage(part, currentTier)
-                : sanitizeImageUrl(part.imageUrl || part.image_url, part.id, 'main');
+                : sanitizeImageUrl(part.imageUrl || part.image_url, part.id, 'main') || (
+                    part.category === 'Batteries'
+                      ? `/images/parts/part-battery-${batterySlug}.svg`
+                      : part.category === 'Back Glasses'
+                      ? '/images/parts/part-backglass-default.svg'
+                      : part.category === 'Housings'
+                      ? '/images/parts/part-housing-default.svg'
+                      : part.category === 'Camera Glasses'
+                      ? '/images/parts/part-camera-default.svg'
+                      : part.category === 'Screen Guards'
+                      ? '/images/parts/part-guard-default.svg'
+                      : '/images/parts/part-acc-default.svg'
+                  );
 
               const whatsappText = isOutOfStock
                 ? `Hello iPhone Lab UG, I am inquiring about: ${part.name} (${
@@ -466,6 +479,18 @@ export const PartsProductsSection: React.FC<PartsProductsSectionProps> = ({
                               const target = e.currentTarget;
                               if (isScreen) {
                                 target.src = currentTier === 'Incell' ? DEFAULT_INCELL_SCREEN_IMAGE : DEFAULT_OLED_SCREEN_IMAGE;
+                              } else if (part.category === 'Batteries') {
+                                target.src = `/images/parts/part-battery-${batterySlug}.svg`;
+                              } else if (part.category === 'Back Glasses') {
+                                target.src = '/images/parts/part-backglass-default.svg';
+                              } else if (part.category === 'Housings') {
+                                target.src = '/images/parts/part-housing-default.svg';
+                              } else if (part.category === 'Camera Glasses') {
+                                target.src = '/images/parts/part-camera-default.svg';
+                              } else if (part.category === 'Screen Guards') {
+                                target.src = '/images/parts/part-guard-default.svg';
+                              } else {
+                                target.src = '/images/parts/part-acc-default.svg';
                               }
                             }}
                           />
