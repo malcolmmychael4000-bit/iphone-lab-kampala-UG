@@ -4,7 +4,6 @@ import { Wrench, Package, ShieldCheck, Zap, ChevronRight, MapPin, Award, Cpu, Ca
 import cleanShopImg from '../assets/images/hero_clean_lab_1787391126995.jpg';
 import microSolderingImg from '../assets/images/hero_microsoldering_1787391143482.jpg';
 import backGlassImg from '../assets/images/hero_laser_backglass_1787391159318.jpg';
-import storefrontImg from '../assets/images/hero_storefront_1787391175509.jpg';
 
 interface HeroSlide {
   id: string;
@@ -31,12 +30,6 @@ const HERO_SLIDES: HeroSlide[] = [
     src: backGlassImg,
     title: 'Laser Precision Back Glass Specialist',
     subtitle: 'Safe automated laser glue separation',
-  },
-  {
-    id: 'storefront',
-    src: storefrontImg,
-    title: 'Pioneer Mall Shop PB86 Reception',
-    subtitle: 'Walk-in customer & technician counter',
   },
 ];
 
