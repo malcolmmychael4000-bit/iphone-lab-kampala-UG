@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { motion } from 'motion/react';
 import { Wrench, Package, ShieldCheck, Zap, ChevronRight, MapPin, Award, Cpu, Camera } from 'lucide-react';
-import cleanShopImg from '../assets/images/clean_repair_shop_1785532184191.jpg';
-import microSolderingImg from '../assets/images/repair_microsoldering_1785532170876.jpg';
-import backGlassImg from '../assets/images/iphone_backglass_repair_1785532199712.jpg';
-import storefrontImg from '../assets/images/storefront_preview_1785540666925.jpg';
+import cleanShopImg from '../assets/images/hero_clean_lab_1787391126995.jpg';
+import microSolderingImg from '../assets/images/hero_microsoldering_1787391143482.jpg';
+import backGlassImg from '../assets/images/hero_laser_backglass_1787391159318.jpg';
+import storefrontImg from '../assets/images/hero_storefront_1787391175509.jpg';
 
 interface HeroSlide {
   id: string;
