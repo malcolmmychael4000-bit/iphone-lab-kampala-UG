@@ -4,12 +4,11 @@ import { Wrench, Package, ShieldCheck, Zap, ChevronRight, MapPin, Award, Cpu, Ca
 import cleanShopImg from '../assets/images/clean_repair_shop_1785532184191.jpg';
 import microSolderingImg from '../assets/images/repair_microsoldering_1785532170876.jpg';
 import backGlassImg from '../assets/images/iphone_backglass_repair_1785532199712.jpg';
+import storefrontImg from '../assets/images/storefront_preview_1785540666925.jpg';
 
 interface HeroSlide {
   id: string;
   src: string;
-  webpSrc: string;
-  mobileWebpSrc: string;
   title: string;
   subtitle: string;
 }
@@ -18,26 +17,26 @@ const HERO_SLIDES: HeroSlide[] = [
   {
     id: 'clean-shop',
     src: cleanShopImg,
-    webpSrc: '/images/hero-clean-shop.webp',
-    mobileWebpSrc: '/images/hero-clean-shop-mobile.webp',
     title: 'Clean Diagnostic & Assembly Lab',
     subtitle: 'Anti-static benches and precision toolsets',
   },
   {
     id: 'microsoldering',
     src: microSolderingImg,
-    webpSrc: '/images/hero-microsoldering.webp',
-    mobileWebpSrc: '/images/hero-microsoldering-mobile.webp',
     title: 'Micro-Soldering Workstation',
     subtitle: 'Under-microscope logic board & IC repair',
   },
   {
     id: 'backglass',
     src: backGlassImg,
-    webpSrc: '/images/hero-backglass.webp',
-    mobileWebpSrc: '/images/hero-backglass-mobile.webp',
     title: 'Laser Precision Back Glass Specialist',
     subtitle: 'Safe automated laser glue separation',
+  },
+  {
+    id: 'storefront',
+    src: storefrontImg,
+    title: 'Pioneer Mall Shop PB86 Reception',
+    subtitle: 'Walk-in customer & technician counter',
   },
 ];
 
@@ -57,7 +56,7 @@ export const Hero: React.FC<HeroProps> = ({ onNavigate, isDarkMode: _isDarkMode 
         const img = new Image();
         img.src = slide.src;
       });
-    }, 2000);
+    }, 1500);
 
     return () => clearTimeout(preloadTimer);
   }, []);
@@ -80,34 +79,31 @@ export const Hero: React.FC<HeroProps> = ({ onNavigate, isDarkMode: _isDarkMode 
       onMouseLeave={() => setIsPaused(false)}
       aria-label="iPhone Lab Kampala Hero Section"
     >
-      {/* Dynamic Background Rotating Real Photography */}
-      <div className="absolute inset-0 z-0 overflow-hidden select-none">
+      {/* Dynamic Background Rotating Real Photography (Bundled directly via Vite for 100% Vercel & Production Reliability) */}
+      <div className="absolute inset-0 z-0 overflow-hidden select-none bg-[#0A0E17]">
         {HERO_SLIDES.map((slide, idx) => (
-          <picture key={slide.id}>
-            <source media="(max-width: 640px)" srcSet={slide.mobileWebpSrc} type="image/webp" />
-            <source media="(min-width: 641px)" srcSet={slide.webpSrc} type="image/webp" />
-            <img
-              src={slide.src}
-              alt={`iPhone Lab Workshop - ${slide.title}`}
-              width={1600}
-              height={900}
-              fetchPriority={idx === 0 ? 'high' : 'auto'}
-              loading={idx === 0 ? 'eager' : 'lazy'}
-              decoding="async"
-              className={`absolute inset-0 w-full h-full object-cover object-center pointer-events-none transition-all duration-1000 ease-in-out ${
-                idx === currentBgIndex
-                  ? 'opacity-75 md:opacity-85 scale-100'
-                  : 'opacity-0 scale-105'
-              }`}
-              referrerPolicy="no-referrer"
-            />
-          </picture>
+          <img
+            key={slide.id}
+            src={slide.src}
+            alt={`iPhone Lab Workshop - ${slide.title}`}
+            width={1600}
+            height={900}
+            fetchPriority={idx === 0 ? 'high' : 'auto'}
+            loading={idx === 0 ? 'eager' : 'lazy'}
+            decoding="async"
+            className={`absolute inset-0 w-full h-full object-cover object-center pointer-events-none transition-all duration-1000 ease-in-out ${
+              idx === currentBgIndex
+                ? 'opacity-80 sm:opacity-85 scale-100'
+                : 'opacity-0 scale-105 pointer-events-none'
+            }`}
+            referrerPolicy="no-referrer"
+          />
         ))}
 
         {/* Cinematic Workshop Lighting Scrim for High Legibility & High Vibrancy */}
-        <div className="absolute inset-0 bg-[#0A0E17]/45 pointer-events-none" />
-        <div className="absolute inset-0 bg-gradient-to-t from-[#0A0E17] via-[#0A0E17]/50 to-[#0A0E17]/60 pointer-events-none" />
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,transparent_0%,rgba(10,14,23,0.75)_100%)] pointer-events-none" />
+        <div className="absolute inset-0 bg-[#0A0E17]/40 pointer-events-none" />
+        <div className="absolute inset-0 bg-gradient-to-t from-[#0A0E17] via-[#0A0E17]/55 to-[#0A0E17]/65 pointer-events-none" />
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,transparent_20%,rgba(10,14,23,0.8)_100%)] pointer-events-none" />
 
         {/* Ambient Lab Glow Highlights */}
         <div className="absolute -top-32 -left-32 w-96 h-96 bg-[#1D9BB5]/20 rounded-full blur-3xl pointer-events-none" />
