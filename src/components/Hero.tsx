@@ -4,7 +4,6 @@ import { Wrench, Package, ShieldCheck, Zap, ChevronRight, MapPin, Award, Cpu, Ca
 import cleanShopImg from '../assets/images/hero_clean_lab_opt.webp';
 import microSolderingImg from '../assets/images/hero_microsoldering_opt.webp';
 import backGlassImg from '../assets/images/hero_laser_backglass_opt.webp';
-import storefrontImg from '../assets/images/hero_storefront_opt.webp';
 
 interface HeroSlide {
   id: string;
@@ -31,12 +30,6 @@ const HERO_SLIDES: HeroSlide[] = [
     src: backGlassImg,
     title: 'Laser Precision Back Glass Specialist',
     subtitle: 'Safe automated laser glue separation',
-  },
-  {
-    id: 'storefront',
-    src: storefrontImg,
-    title: 'Shop PB86, New Pioneer Mall',
-    subtitle: 'Kampala’s premier walk-in Apple repair center',
   },
 ];
 
