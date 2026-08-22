@@ -91,23 +91,23 @@ export const Hero: React.FC<HeroProps> = ({ onNavigate, isDarkMode: _isDarkMode 
             fetchPriority={idx === 0 ? 'high' : 'auto'}
             loading={idx === 0 ? 'eager' : 'lazy'}
             decoding="async"
-            className={`absolute inset-0 w-full h-full object-cover object-center pointer-events-none transition-all duration-1000 ease-in-out ${
+            className={`absolute inset-0 w-full h-full object-cover object-center pointer-events-none transition-opacity duration-1000 ease-in-out ${
               idx === currentBgIndex
-                ? 'opacity-80 sm:opacity-85 scale-100'
-                : 'opacity-0 scale-105 pointer-events-none'
+                ? 'opacity-90 scale-100'
+                : 'opacity-0 scale-100 pointer-events-none'
             }`}
             referrerPolicy="no-referrer"
           />
         ))}
 
-        {/* Cinematic Workshop Lighting Scrim for High Legibility & High Vibrancy */}
-        <div className="absolute inset-0 bg-[#0A0E17]/40 pointer-events-none" />
-        <div className="absolute inset-0 bg-gradient-to-t from-[#0A0E17] via-[#0A0E17]/55 to-[#0A0E17]/65 pointer-events-none" />
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,transparent_20%,rgba(10,14,23,0.8)_100%)] pointer-events-none" />
+        {/* Lightweight Vignette for High Text Legibility & Preserved Photo Vibrancy */}
+        <div className="absolute inset-0 bg-[#0A0E17]/25 pointer-events-none" />
+        <div className="absolute inset-0 bg-gradient-to-t from-[#0A0E17] via-transparent to-[#0A0E17]/70 pointer-events-none" />
+        <div className="absolute inset-0 bg-gradient-to-b from-[#0A0E17]/70 via-transparent to-[#0A0E17] pointer-events-none" />
 
-        {/* Ambient Lab Glow Highlights */}
-        <div className="absolute -top-32 -left-32 w-96 h-96 bg-[#1D9BB5]/20 rounded-full blur-3xl pointer-events-none" />
-        <div className="absolute -bottom-32 -right-32 w-96 h-96 bg-[#1F3864]/30 rounded-full blur-3xl pointer-events-none" />
+        {/* Ambient Subtle Lab Glow Highlights */}
+        <div className="absolute -top-32 -left-32 w-96 h-96 bg-[#1D9BB5]/15 rounded-full blur-3xl pointer-events-none" />
+        <div className="absolute -bottom-32 -right-32 w-96 h-96 bg-[#1F3864]/20 rounded-full blur-3xl pointer-events-none" />
       </div>
 
       {/* Main Content Container */}
