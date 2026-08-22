@@ -1,6 +1,7 @@
 import express, { Request, Response } from 'express';
 import path from 'path';
 import fs from 'fs';
+import compression from 'compression';
 import { createServer as createViteServer } from 'vite';
 import { createClient } from '@supabase/supabase-js';
 import { INITIAL_PARTS, INITIAL_SERVICES } from './src/data/seedData.js';
@@ -188,6 +189,9 @@ function rateLimitFormSubmissions(req: Request, res: Response, next: () => void)
 async function startServer() {
   const app = express();
   const PORT = 3000;
+
+  // Gzip / Deflate compression for all responses
+  app.use(compression());
 
   app.use(express.json({ limit: '100mb' }));
   app.use(express.urlencoded({ extended: true, limit: '100mb' }));
@@ -812,7 +816,7 @@ async function startServer() {
 
   // Serve static assets from public folder
   const publicPath = path.join(process.cwd(), 'public');
-  app.use(express.static(publicPath, { maxAge: '1d' }));
+  app.use(express.static(publicPath, { maxAge: '7d' }));
 
   // Vite Middleware handling for development vs production
   if (process.env.NODE_ENV !== 'production') {
@@ -823,7 +827,15 @@ async function startServer() {
     app.use(vite.middlewares);
   } else {
     const distPath = path.join(process.cwd(), 'dist');
-    app.use(express.static(distPath));
+    app.use(express.static(distPath, {
+      maxAge: '1y',
+      immutable: true,
+      setHeaders: (res, filePath) => {
+        if (filePath.endsWith('.html')) {
+          res.setHeader('Cache-Control', 'public, max-age=0, must-revalidate');
+        }
+      }
+    }));
     app.get('*', (req: Request, res: Response) => {
       res.sendFile(path.join(distPath, 'index.html'));
     });

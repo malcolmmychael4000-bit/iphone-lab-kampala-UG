@@ -17,16 +17,22 @@ export const Hero: React.FC<HeroProps> = ({ onNavigate, isDarkMode }) => {
   const [currentBgIndex, setCurrentBgIndex] = useState(0);
 
   useEffect(() => {
-    // Preload remaining images into browser memory cache for instant LCP transitions
-    HERO_IMAGES.forEach((src) => {
-      const img = new Image();
-      img.src = src;
-    });
+    // Defer loading secondary carousel background images until after initial render is settled
+    const preloadTimer = setTimeout(() => {
+      HERO_IMAGES.slice(1).forEach((src) => {
+        const img = new Image();
+        img.src = src;
+      });
+    }, 4000);
 
     const timer = setInterval(() => {
       setCurrentBgIndex((prev) => (prev + 1) % HERO_IMAGES.length);
-    }, 7000);
-    return () => clearInterval(timer);
+    }, 8000);
+
+    return () => {
+      clearTimeout(preloadTimer);
+      clearInterval(timer);
+    };
   }, []);
 
   return (

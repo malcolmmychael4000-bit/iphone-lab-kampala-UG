@@ -1,19 +1,28 @@
 import React, { useState, useEffect, Suspense, lazy } from 'react';
 import { Navbar } from './components/Navbar';
 import { Hero } from './components/Hero';
-import { ServicesGrid } from './components/ServicesGrid';
-import { PartsProductsSection } from './components/PartsProductsSection';
-import { TrustSection } from './components/TrustSection';
-import { ReviewsSection } from './components/ReviewsSection';
-import { BookingForm } from './components/BookingForm';
-import { ContactSection } from './components/ContactSection';
-import { FloatingWhatsApp } from './components/FloatingWhatsApp';
-import { Footer } from './components/Footer';
+
+// Code-split below-the-fold components for ultra-fast initial paint (LCP & TBT optimization)
+const ServicesGrid = lazy(() => import('./components/ServicesGrid').then(m => ({ default: m.ServicesGrid })));
+const PartsProductsSection = lazy(() => import('./components/PartsProductsSection').then(m => ({ default: m.PartsProductsSection })));
+const TrustSection = lazy(() => import('./components/TrustSection').then(m => ({ default: m.TrustSection })));
+const ReviewsSection = lazy(() => import('./components/ReviewsSection').then(m => ({ default: m.ReviewsSection })));
+const BookingForm = lazy(() => import('./components/BookingForm').then(m => ({ default: m.BookingForm })));
+const ContactSection = lazy(() => import('./components/ContactSection').then(m => ({ default: m.ContactSection })));
+const FloatingWhatsApp = lazy(() => import('./components/FloatingWhatsApp').then(m => ({ default: m.FloatingWhatsApp })));
+const Footer = lazy(() => import('./components/Footer').then(m => ({ default: m.Footer })));
 
 // Admin panel is code-split so regular visitors don't load admin code
 const AdminPanel = lazy(() => import('./components/AdminPanel').then(m => ({ default: m.AdminPanel })));
 
 export type ThemeMode = 'light' | 'dark' | 'system';
+
+// Lightweight fallback placeholder for lazy loaded sections
+const SectionSkeleton: React.FC<{ minHeight?: string }> = ({ minHeight = 'min-h-[250px]' }) => (
+  <div className={`w-full ${minHeight} flex items-center justify-center p-8 opacity-40`}>
+    <div className="w-8 h-8 rounded-full border-2 border-[#1D9BB5] border-t-transparent animate-spin" />
+  </div>
+);
 
 // Skeleton fallback loader only for Admin panel navigation
 const AdminSkeleton: React.FC = () => (
@@ -157,28 +166,44 @@ export default function App() {
         ) : (
           <>
             <Hero onNavigate={handleNavigate} isDarkMode={isDarkMode} />
-            <ServicesGrid
-              isDarkMode={isDarkMode}
-              onSelectServiceForBooking={handleSelectServiceForBooking}
-            />
-            <PartsProductsSection
-              isDarkMode={isDarkMode}
-              onSelectPartForBooking={(partName) => handleSelectServiceForBooking(partName)}
-            />
-            <TrustSection isDarkMode={isDarkMode} />
-            <ReviewsSection isDarkMode={isDarkMode} />
-            <BookingForm
-              isDarkMode={isDarkMode}
-              preselectedService={preselectedService}
-            />
-            <ContactSection isDarkMode={isDarkMode} />
+            <Suspense fallback={<SectionSkeleton minHeight="min-h-[400px]" />}>
+              <ServicesGrid
+                isDarkMode={isDarkMode}
+                onSelectServiceForBooking={handleSelectServiceForBooking}
+              />
+            </Suspense>
+            <Suspense fallback={<SectionSkeleton minHeight="min-h-[500px]" />}>
+              <PartsProductsSection
+                isDarkMode={isDarkMode}
+                onSelectPartForBooking={(partName) => handleSelectServiceForBooking(partName)}
+              />
+            </Suspense>
+            <Suspense fallback={<SectionSkeleton minHeight="min-h-[300px]" />}>
+              <TrustSection isDarkMode={isDarkMode} />
+            </Suspense>
+            <Suspense fallback={<SectionSkeleton minHeight="min-h-[300px]" />}>
+              <ReviewsSection isDarkMode={isDarkMode} />
+            </Suspense>
+            <Suspense fallback={<SectionSkeleton minHeight="min-h-[400px]" />}>
+              <BookingForm
+                isDarkMode={isDarkMode}
+                preselectedService={preselectedService}
+              />
+            </Suspense>
+            <Suspense fallback={<SectionSkeleton minHeight="min-h-[400px]" />}>
+              <ContactSection isDarkMode={isDarkMode} />
+            </Suspense>
           </>
         )}
       </main>
 
       {/* Floating WhatsApp Action Button & Footer */}
-      <FloatingWhatsApp />
-      <Footer isDarkMode={isDarkMode} onNavigate={handleNavigate} />
+      <Suspense fallback={null}>
+        <FloatingWhatsApp />
+      </Suspense>
+      <Suspense fallback={null}>
+        <Footer isDarkMode={isDarkMode} onNavigate={handleNavigate} />
+      </Suspense>
     </div>
   );
 }
