@@ -74,20 +74,43 @@ export const PartsProductsSection: React.FC<PartsProductsSectionProps> = ({
   const fetchParts = async () => {
     try {
       const res = await fetch('/api/parts');
-      if (res.ok) {
+      const contentType = res.headers.get('content-type') || '';
+      if (res.ok && contentType.includes('application/json')) {
         const data = await res.json();
         if (Array.isArray(data) && data.length > 0) {
           const merged = mergeWithStoredParts(data);
           setParts(merged);
+          return;
         }
       }
     } catch (err) {
       console.warn('Background parts sync note:', err);
     }
+
+    // Static fallback: load from stored parts or initial seeds
+    const fallback = mergeWithStoredParts(INITIAL_PARTS);
+    setParts(fallback);
   };
 
   useEffect(() => {
     fetchParts();
+
+    // Listen for catalog updates dispatched from Admin Inventory in real-time
+    const handleCatalogUpdate = (e: Event) => {
+      const customEvent = e as CustomEvent<PartProduct[]>;
+      if (customEvent.detail && Array.isArray(customEvent.detail)) {
+        setParts(mergeWithStoredParts(customEvent.detail));
+      } else {
+        fetchParts();
+      }
+    };
+
+    window.addEventListener('iphone_lab_catalog_updated', handleCatalogUpdate);
+    window.addEventListener('storage', fetchParts);
+    return () => {
+      window.removeEventListener('iphone_lab_catalog_updated', handleCatalogUpdate);
+      window.removeEventListener('storage', fetchParts);
+    };
   }, []);
 
   const handleTierToggle = (partId: string, tier: 'Incell' | 'OLED') => {

@@ -307,10 +307,9 @@ export const AdminPanel: React.FC<AdminPanelProps> = ({ isDarkMode, onBackToMain
       let loadedParts: PartProduct[] = [];
       if (resP.status === 'fulfilled' && resP.value.ok && (resP.value.headers.get('content-type') || '').includes('application/json')) {
         const pData = await resP.value.json();
-        loadedParts = mergeWithStoredParts(pData);
+        loadedParts = mergeWithStoredParts(Array.isArray(pData) && pData.length > 0 ? pData : INITIAL_PARTS);
       } else {
-        const stored = getStoredParts();
-        loadedParts = stored && stored.length > 0 ? stored : INITIAL_PARTS;
+        loadedParts = mergeWithStoredParts(INITIAL_PARTS);
       }
       setParts(loadedParts);
       saveStoredParts(loadedParts);
@@ -326,9 +325,9 @@ export const AdminPanel: React.FC<AdminPanelProps> = ({ isDarkMode, onBackToMain
       setContacts(loadedContacts);
     } catch (err) {
       console.error('Error loading admin data, using local storage:', err);
-      const stored = getStoredParts();
-      const partsFallback = stored && stored.length > 0 ? stored : INITIAL_PARTS;
+      const partsFallback = mergeWithStoredParts(INITIAL_PARTS);
       setParts(partsFallback);
+      saveStoredParts(partsFallback);
       const localB = localStorage.getItem('iphone_lab_bookings');
       setBookings(localB ? JSON.parse(localB) : defaultBookings);
       const localC = localStorage.getItem('iphone_lab_contacts');

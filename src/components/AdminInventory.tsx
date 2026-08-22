@@ -393,7 +393,7 @@ export const AdminInventory: React.FC<AdminInventoryProps> = ({
           if (!rawUrl) return resolve('');
           const img = new Image();
           img.onload = () => {
-            const maxDim = 800;
+            const maxDim = 640;
             let { width, height } = img;
             if (width > maxDim || height > maxDim) {
               if (width > height) {
@@ -415,8 +415,8 @@ export const AdminInventory: React.FC<AdminInventoryProps> = ({
               ctx.clearRect(0, 0, width, height);
               ctx.drawImage(img, 0, 0, width, height);
               try {
-                const webp = canvas.toDataURL('image/webp', 0.88);
-                if (webp && webp.startsWith('data:image/webp')) {
+                const webp = canvas.toDataURL('image/webp', 0.90);
+                if (webp && webp.startsWith('data:image/webp') && webp.length < 500000) {
                   return resolve(webp);
                 }
               } catch {}
@@ -440,7 +440,7 @@ export const AdminInventory: React.FC<AdminInventoryProps> = ({
         return;
       }
 
-      // Upload to server to save as static file on disk or Supabase
+      // Upload to server if available, otherwise use preserved optimized data URL
       let permanentUrl = base64Data;
       try {
         const token = localStorage.getItem('iphone_lab_admin_token') || '';
@@ -452,9 +452,12 @@ export const AdminInventory: React.FC<AdminInventoryProps> = ({
           },
           body: JSON.stringify({ imageBase64: base64Data, filename: file.name }),
         });
-        const data = await res.json();
-        if (res.ok && data.image_url && typeof data.image_url === 'string') {
-          permanentUrl = data.image_url;
+        const contentType = res.headers.get('content-type') || '';
+        if (res.ok && contentType.includes('application/json')) {
+          const data = await res.json();
+          if (data.image_url && typeof data.image_url === 'string') {
+            permanentUrl = data.image_url;
+          }
         }
       } catch (uploadErr) {
         console.warn('Server image upload fallback to data URL:', uploadErr);
