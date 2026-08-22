@@ -93,7 +93,7 @@ export const Navbar: React.FC<NavbarProps> = ({
             className="flex items-center text-left focus:outline-none focus-visible:ring-2 focus-visible:ring-[#1D9BB5] rounded-xl p-1 -ml-1 group"
             aria-label="iPhone Lab UG Home"
           >
-            <Logo isDarkMode={isDarkMode} className="h-10 sm:h-12 my-auto" />
+            <Logo isDarkMode={isDarkMode} className="my-auto py-1" />
           </button>
 
           {/* Desktop Navigation Links */}

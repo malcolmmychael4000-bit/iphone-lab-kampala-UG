@@ -23,7 +23,7 @@ export const Footer: React.FC<FooterProps> = ({ isDarkMode, onNavigate }) => {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10 mb-12">
           {/* Col 1: Brand */}
           <div className="space-y-4">
-            <Logo isDarkMode={true} className="h-11 sm:h-12" />
+            <Logo isDarkMode={true} />
             <p className="text-xs text-slate-200 leading-relaxed font-normal">
               Kampala’s specialized iPhone repair laboratory &amp; genuine parts supplier. Micro-soldering, laser back glass, screen swaps, and high capacity batteries.
             </p>
