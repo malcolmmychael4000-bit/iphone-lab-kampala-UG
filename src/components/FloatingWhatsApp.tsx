@@ -18,9 +18,9 @@ export const FloatingWhatsApp: React.FC = () => {
             type="button"
             onClick={() => setShowTooltip(false)}
             aria-label="Dismiss fast assistance prompt"
-            className="absolute top-1 right-1 p-1 text-slate-400 hover:text-white"
+            className="absolute top-1 right-1 p-2 min-w-[36px] min-h-[36px] flex items-center justify-center text-slate-400 hover:text-white rounded-lg focus:outline-none focus-visible:ring-2 focus-visible:ring-[#1D9BB5]"
           >
-            <X className="w-3.5 h-3.5" />
+            <X className="w-4 h-4" />
           </button>
           <div className="font-bold text-[#1D9BB5] mb-0.5">Need Fast Assistance?</div>
           <p className="text-[11px] text-slate-200">

@@ -1,13 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import { motion } from 'motion/react';
 import { Wrench, Package, ShieldCheck, Zap, ChevronRight, MapPin, Award, Cpu, Camera } from 'lucide-react';
-import cleanShopImg from '../assets/images/hero_clean_lab_1787391126995.jpg';
-import microSolderingImg from '../assets/images/hero_microsoldering_1787391143482.jpg';
-import backGlassImg from '../assets/images/hero_laser_backglass_1787391159318.jpg';
+import cleanShopImg from '../assets/images/hero_clean_lab_opt.webp';
+import microSolderingImg from '../assets/images/hero_microsoldering_opt.webp';
+import backGlassImg from '../assets/images/hero_laser_backglass_opt.webp';
 
 interface HeroSlide {
   id: string;
   src: string;
+  mobileSrc: string;
   title: string;
   subtitle: string;
 }
@@ -16,18 +17,21 @@ const HERO_SLIDES: HeroSlide[] = [
   {
     id: 'clean-shop',
     src: cleanShopImg,
+    mobileSrc: '/images/hero-clean-shop-mobile.webp',
     title: 'Clean Diagnostic & Assembly Lab',
     subtitle: 'Anti-static benches and precision toolsets',
   },
   {
     id: 'microsoldering',
     src: microSolderingImg,
+    mobileSrc: '/images/hero-microsoldering-mobile.webp',
     title: 'Micro-Soldering Workstation',
     subtitle: 'Under-microscope logic board & IC repair',
   },
   {
     id: 'backglass',
     src: backGlassImg,
+    mobileSrc: '/images/hero-backglass-mobile.webp',
     title: 'Laser Precision Back Glass Specialist',
     subtitle: 'Safe automated laser glue separation',
   },
@@ -72,25 +76,28 @@ export const Hero: React.FC<HeroProps> = ({ onNavigate, isDarkMode: _isDarkMode 
       onMouseLeave={() => setIsPaused(false)}
       aria-label="iPhone Lab Kampala Hero Section"
     >
-      {/* Dynamic Background Rotating Real Photography (Bundled directly via Vite for 100% Vercel & Production Reliability) */}
+      {/* Dynamic Background Rotating Real Photography (Optimized WebP with mobile & desktop responsive sources) */}
       <div className="absolute inset-0 z-0 overflow-hidden select-none bg-[#0A0E17]">
         {HERO_SLIDES.map((slide, idx) => (
-          <img
+          <picture
             key={slide.id}
-            src={slide.src}
-            alt={`iPhone Lab Workshop - ${slide.title}`}
-            width={1600}
-            height={900}
-            fetchPriority={idx === 0 ? 'high' : 'auto'}
-            loading={idx === 0 ? 'eager' : 'lazy'}
-            decoding="async"
-            className={`absolute inset-0 w-full h-full object-cover object-center pointer-events-none transition-opacity duration-1000 ease-in-out ${
-              idx === currentBgIndex
-                ? 'opacity-90 scale-100'
-                : 'opacity-0 scale-100 pointer-events-none'
+            className={`absolute inset-0 w-full h-full pointer-events-none transition-opacity duration-1000 ease-in-out ${
+              idx === currentBgIndex ? 'opacity-90' : 'opacity-0'
             }`}
-            referrerPolicy="no-referrer"
-          />
+          >
+            <source media="(max-width: 639px)" srcSet={slide.mobileSrc} type="image/webp" />
+            <img
+              src={slide.src}
+              alt={`iPhone Lab Workshop - ${slide.title}`}
+              width={1440}
+              height={804}
+              fetchPriority={idx === 0 ? 'high' : 'auto'}
+              loading={idx === 0 ? 'eager' : 'lazy'}
+              decoding="async"
+              className="w-full h-full object-cover object-center pointer-events-none"
+              referrerPolicy="no-referrer"
+            />
+          </picture>
         ))}
 
         {/* Lightweight Vignette for High Text Legibility & Preserved Photo Vibrancy */}

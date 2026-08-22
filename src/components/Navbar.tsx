@@ -223,7 +223,7 @@ export const Navbar: React.FC<NavbarProps> = ({
                   onClick={() => onSetTheme('light')}
                   role="radio"
                   aria-checked={themeMode === 'light'}
-                  className={`p-2 min-h-[40px] min-w-[40px] flex items-center justify-center rounded-lg ${themeMode === 'light' ? 'bg-white text-slate-900' : 'text-slate-400'}`}
+                  className={`p-2 min-h-[44px] min-w-[44px] flex items-center justify-center rounded-lg ${themeMode === 'light' ? 'bg-white text-slate-900' : 'text-slate-400'}`}
                   aria-label="Light mode"
                 >
                   <Sun className="w-4 h-4 text-amber-500" />
@@ -232,7 +232,7 @@ export const Navbar: React.FC<NavbarProps> = ({
                   onClick={() => onSetTheme('dark')}
                   role="radio"
                   aria-checked={themeMode === 'dark'}
-                  className={`p-2 min-h-[40px] min-w-[40px] flex items-center justify-center rounded-lg ${themeMode === 'dark' ? 'bg-slate-900 text-white' : 'text-slate-400'}`}
+                  className={`p-2 min-h-[44px] min-w-[44px] flex items-center justify-center rounded-lg ${themeMode === 'dark' ? 'bg-slate-900 text-white' : 'text-slate-400'}`}
                   aria-label="Dark mode"
                 >
                   <Moon className="w-4 h-4 text-indigo-400" />
@@ -241,7 +241,7 @@ export const Navbar: React.FC<NavbarProps> = ({
                   onClick={() => onSetTheme('system')}
                   role="radio"
                   aria-checked={themeMode === 'system'}
-                  className={`p-2 min-h-[40px] min-w-[40px] flex items-center justify-center rounded-lg ${themeMode === 'system' ? 'bg-[#1D9BB5] text-white' : 'text-slate-400'}`}
+                  className={`p-2 min-h-[44px] min-w-[44px] flex items-center justify-center rounded-lg ${themeMode === 'system' ? 'bg-[#1D9BB5] text-white' : 'text-slate-400'}`}
                   aria-label="System mode"
                 >
                   <Monitor className="w-4 h-4" />
