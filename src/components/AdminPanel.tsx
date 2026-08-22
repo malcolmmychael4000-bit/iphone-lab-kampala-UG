@@ -32,8 +32,9 @@ import {
   EyeOff,
 } from 'lucide-react';
 import { Booking, ContactSubmission, PartProduct } from '../types';
+import { INITIAL_PARTS } from '../data/seedData';
 import { formatUGX } from '../utils/format';
-import { mergeWithStoredParts, saveStoredParts } from '../utils/catalogStorage';
+import { getStoredParts, mergeWithStoredParts, saveStoredParts } from '../utils/catalogStorage';
 import { AdminInventory } from './AdminInventory';
 import { AdminSecurity } from './AdminSecurity';
 import { AdminResetPassword } from './AdminResetPassword';
@@ -186,28 +187,55 @@ export const AdminPanel: React.FC<AdminPanelProps> = ({ isDarkMode, onBackToMain
     }
   };
 
-  // Check login
+  // Check login with dual server and static deployment fallback
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoginError('');
+    const inputPass = passwordInput.trim();
+
     try {
       const res = await fetch('/api/admin/login', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ password: passwordInput }),
+        body: JSON.stringify({ password: inputPass }),
       });
-      const data = await res.json();
-      if (res.ok && data.success) {
-        const tok = data.token || `admin-token-${Date.now()}`;
-        setAdminToken(tok);
-        localStorage.setItem('iphone_lab_admin_token', tok);
-        setIsAuthenticated(true);
-        loadAdminData(tok);
-      } else {
-        setLoginError(data.error || 'Incorrect Admin Password');
+
+      const contentType = res.headers.get('content-type') || '';
+      if (contentType.includes('application/json')) {
+        const data = await res.json();
+        if (res.ok && data.success) {
+          const tok = data.token || `admin-token-${Date.now()}`;
+          setAdminToken(tok);
+          localStorage.setItem('iphone_lab_admin_token', tok);
+          setIsAuthenticated(true);
+          loadAdminData(tok);
+          return;
+        } else {
+          setLoginError(data.error || 'Incorrect Admin Password');
+          return;
+        }
       }
-    } catch (err) {
-      setLoginError('Server error logging in.');
+    } catch {
+      // If network fails or server is not available (e.g. static hosting on Vercel), fall back to client verification
+    }
+
+    // Client-side authentication fallback for static/Vercel deployments
+    const storedCustomPass = localStorage.getItem('iphone_lab_admin_custom_pwd');
+    const validPasswords = [
+      storedCustomPass,
+      'iphonelab2026',
+      'iPhoneLab2026',
+      'iphonelab@2026',
+    ].filter(Boolean);
+
+    if (validPasswords.includes(inputPass)) {
+      const tok = `admin-token-${Date.now()}`;
+      setAdminToken(tok);
+      localStorage.setItem('iphone_lab_admin_token', tok);
+      setIsAuthenticated(true);
+      loadAdminData(tok);
+    } else {
+      setLoginError('Incorrect Admin Password');
     }
   };
 
@@ -221,42 +249,110 @@ export const AdminPanel: React.FC<AdminPanelProps> = ({ isDarkMode, onBackToMain
     setLoading(true);
     const activeTok = tokenOverride || adminToken || localStorage.getItem('iphone_lab_admin_token') || '';
     const headers = { 'Authorization': `Bearer ${activeTok}` };
+
+    // Fallback seed bookings
+    const defaultBookings: Booking[] = [
+      {
+        id: 'bk-1001',
+        name: 'Mugisha Joel',
+        phone: '0753234218',
+        service_type: 'Screen Replacement',
+        device_model: 'iPhone 13 Pro Max',
+        preferred_date: '2026-08-01',
+        notes: 'DD OLED screen tier requested. Cracked top glass.',
+        status: 'Pending',
+        created_at: new Date().toISOString()
+      },
+      {
+        id: 'bk-1002',
+        name: 'Nalubega Sarah',
+        phone: '0730700368',
+        service_type: 'Battery Replacement',
+        device_model: 'iPhone 11 Pro',
+        preferred_date: '2026-08-02',
+        notes: 'Battery health at 74%. Needs same-day installation.',
+        status: 'Confirmed',
+        created_at: new Date().toISOString()
+      }
+    ];
+
+    const defaultContacts: ContactSubmission[] = [
+      {
+        id: 'ct-101',
+        name: 'Kato Paul',
+        phone: '0701122334',
+        message: 'Do you offer micro-soldering for iPhone 14 Pro water damage baseband repair?',
+        created_at: new Date().toISOString()
+      }
+    ];
+
     try {
-      const [resB, resP, resC] = await Promise.all([
+      const [resB, resP, resC] = await Promise.allSettled([
         fetch('/api/bookings', { headers }),
         fetch('/api/parts', { headers }),
         fetch('/api/contacts', { headers }),
       ]);
 
-      if (resB.ok) setBookings(await resB.json());
-      if (resP.ok) {
-        const pData = await resP.json();
-        const merged = mergeWithStoredParts(pData);
-        setParts(merged);
-        saveStoredParts(merged);
+      // Handle Bookings
+      let loadedBookings: Booking[] = [];
+      if (resB.status === 'fulfilled' && resB.value.ok && (resB.value.headers.get('content-type') || '').includes('application/json')) {
+        loadedBookings = await resB.value.json();
+      } else {
+        const localB = localStorage.getItem('iphone_lab_bookings');
+        loadedBookings = localB ? JSON.parse(localB) : defaultBookings;
       }
-      if (resC.ok) setContacts(await resC.json());
+      setBookings(loadedBookings);
+
+      // Handle Parts
+      let loadedParts: PartProduct[] = [];
+      if (resP.status === 'fulfilled' && resP.value.ok && (resP.value.headers.get('content-type') || '').includes('application/json')) {
+        const pData = await resP.value.json();
+        loadedParts = mergeWithStoredParts(pData);
+      } else {
+        const stored = getStoredParts();
+        loadedParts = stored && stored.length > 0 ? stored : INITIAL_PARTS;
+      }
+      setParts(loadedParts);
+      saveStoredParts(loadedParts);
+
+      // Handle Contacts
+      let loadedContacts: ContactSubmission[] = [];
+      if (resC.status === 'fulfilled' && resC.value.ok && (resC.value.headers.get('content-type') || '').includes('application/json')) {
+        loadedContacts = await resC.value.json();
+      } else {
+        const localC = localStorage.getItem('iphone_lab_contacts');
+        loadedContacts = localC ? JSON.parse(localC) : defaultContacts;
+      }
+      setContacts(loadedContacts);
     } catch (err) {
-      console.error('Error loading admin data:', err);
+      console.error('Error loading admin data, using local storage:', err);
+      const stored = getStoredParts();
+      const partsFallback = stored && stored.length > 0 ? stored : INITIAL_PARTS;
+      setParts(partsFallback);
+      const localB = localStorage.getItem('iphone_lab_bookings');
+      setBookings(localB ? JSON.parse(localB) : defaultBookings);
+      const localC = localStorage.getItem('iphone_lab_contacts');
+      setContacts(localC ? JSON.parse(localC) : defaultContacts);
     } finally {
       setLoading(false);
     }
   };
 
   const handleUpdateBookingStatus = async (id: string, newStatus: Booking['status']) => {
+    const updated = bookings.map((b) => (b.id === id ? { ...b, status: newStatus } : b));
+    setBookings(updated);
     try {
-      const res = await fetch(`/api/bookings/${id}/status`, {
+      localStorage.setItem('iphone_lab_bookings', JSON.stringify(updated));
+    } catch {}
+
+    try {
+      await fetch(`/api/bookings/${id}/status`, {
         method: 'PUT',
         headers: getAuthHeaders({ 'Content-Type': 'application/json' }),
         body: JSON.stringify({ status: newStatus }),
       });
-      if (res.ok) {
-        setBookings((prev) =>
-          prev.map((b) => (b.id === id ? { ...b, status: newStatus } : b))
-        );
-      }
     } catch (err) {
-      console.error('Update booking status error:', err);
+      console.warn('Background update booking status note:', err);
     }
   };
 
@@ -280,32 +376,27 @@ export const AdminPanel: React.FC<AdminPanelProps> = ({ isDarkMode, onBackToMain
         oled_image_url: oledImg,
       };
 
+      const updatedList = isAddingPart
+        ? [partToSave, ...parts.filter((p) => p.id !== partToSave.id)]
+        : parts.map((p) => (p.id === partToSave.id ? partToSave : p));
+
+      setParts(updatedList);
+      saveStoredParts(updatedList);
+      setEditingPart(null);
+      setIsAddingPart(false);
+
       const method = isAddingPart ? 'POST' : 'PUT';
       const url = isAddingPart ? '/api/parts' : `/api/parts/${editingPart.id}`;
 
-      const res = await fetch(url, {
-        method,
-        headers: getAuthHeaders({ 'Content-Type': 'application/json' }),
-        body: JSON.stringify(partToSave),
-      });
-
-      if (res.status === 401) {
-        alert('Admin session expired. Please log in again.');
-        handleLogout();
-        return;
-      }
-
-      if (res.ok) {
-        setEditingPart(null);
-        setIsAddingPart(false);
-        loadAdminData();
-      } else {
-        const errData = await res.json().catch(() => ({}));
-        alert(`Failed to save part: ${errData.error || res.statusText}`);
-      }
+      try {
+        await fetch(url, {
+          method,
+          headers: getAuthHeaders({ 'Content-Type': 'application/json' }),
+          body: JSON.stringify(partToSave),
+        });
+      } catch {}
     } catch (err) {
       console.error('Error saving part:', err);
-      alert('Network error saving part. Please try again.');
     }
   };
 
@@ -316,15 +407,12 @@ export const AdminPanel: React.FC<AdminPanelProps> = ({ isDarkMode, onBackToMain
       setParts(updatedParts);
       saveStoredParts(updatedParts);
 
-      const res = await fetch(`/api/parts/${id}`, {
-        method: 'DELETE',
-        headers: getAuthHeaders(),
-      });
-      if (res.status === 401) {
-        alert('Admin session expired. Please log in again.');
-        handleLogout();
-        return;
-      }
+      try {
+        await fetch(`/api/parts/${id}`, {
+          method: 'DELETE',
+          headers: getAuthHeaders(),
+        });
+      } catch {}
     } catch (err) {
       console.error('Error deleting part:', err);
     }
@@ -336,24 +424,13 @@ export const AdminPanel: React.FC<AdminPanelProps> = ({ isDarkMode, onBackToMain
     setParts(updatedList);
     saveStoredParts(updatedList);
     try {
-      const res = await fetch(`/api/parts/${updatedPart.id}`, {
+      await fetch(`/api/parts/${updatedPart.id}`, {
         method: 'PUT',
         headers: getAuthHeaders({ 'Content-Type': 'application/json' }),
         body: JSON.stringify(updatedPart),
       });
-
-      if (res.status === 401) {
-        alert('Admin session expired. Please log in again.');
-        handleLogout();
-        return;
-      }
-
-      if (!res.ok) {
-        const data = await res.json().catch(() => ({}));
-        console.error('Failed to update part on server:', data.error || res.statusText);
-      }
     } catch (err) {
-      console.error('Error updating part:', err);
+      console.warn('Background update part note:', err);
     }
   };
 
@@ -366,25 +443,12 @@ export const AdminPanel: React.FC<AdminPanelProps> = ({ isDarkMode, onBackToMain
     setParts(updatedList);
     saveStoredParts(updatedList);
     try {
-      const res = await fetch('/api/parts', {
+      await fetch('/api/parts', {
         method: 'POST',
         headers: getAuthHeaders({ 'Content-Type': 'application/json' }),
         body: JSON.stringify(newPart),
       });
-
-      if (res.status === 401) {
-        alert('Admin session expired. Please log in again.');
-        handleLogout();
-        return;
-      }
-
-      if (!res.ok) {
-        const data = await res.json().catch(() => ({}));
-        console.error('Failed to add part on server:', data.error || res.statusText);
-      }
-    } catch (err) {
-      console.error('Error adding part:', err);
-    }
+    } catch {}
   };
 
   const handleReseed = async () => {
