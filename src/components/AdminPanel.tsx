@@ -34,7 +34,7 @@ import {
 import { Booking, ContactSubmission, PartProduct } from '../types';
 import { INITIAL_PARTS } from '../data/seedData';
 import { formatUGX } from '../utils/format';
-import { getStoredParts, mergeWithStoredParts, saveStoredParts } from '../utils/catalogStorage';
+import { getStoredParts, mergeWithStoredParts, saveStoredParts, hydrateCatalogFromIdb } from '../utils/catalogStorage';
 import { AdminInventory } from './AdminInventory';
 import { AdminSecurity } from './AdminSecurity';
 import { AdminResetPassword } from './AdminResetPassword';
@@ -69,6 +69,13 @@ export const AdminPanel: React.FC<AdminPanelProps> = ({ isDarkMode, onBackToMain
   const [uploadingImage, setUploadingImage] = useState(false);
 
   useEffect(() => {
+    // Hydrate catalog from IndexedDB for high-capacity offline image support
+    hydrateCatalogFromIdb().then((idbParts) => {
+      if (idbParts && idbParts.length > 0) {
+        setParts(mergeWithStoredParts(INITIAL_PARTS));
+      }
+    });
+
     const storedToken = localStorage.getItem('iphone_lab_admin_token');
     if (storedToken) {
       setAdminToken(storedToken);

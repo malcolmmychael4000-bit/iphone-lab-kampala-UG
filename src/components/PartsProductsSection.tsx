@@ -21,7 +21,7 @@ import {
 import { INITIAL_PARTS } from '../data/seedData';
 import { PartCategory, PartProduct } from '../types';
 import { formatUGX, buildWhatsAppLink } from '../utils/format';
-import { mergeWithStoredParts, sanitizeImageUrl } from '../utils/catalogStorage';
+import { mergeWithStoredParts, sanitizeImageUrl, hydrateCatalogFromIdb } from '../utils/catalogStorage';
 
 const DEFAULT_INCELL_SCREEN_IMAGE = "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='600' height='350' viewBox='0 0 600 350'><rect width='600' height='350' fill='%23090d16' rx='16'/><rect x='190' y='20' width='220' height='310' rx='28' fill='%231e293b' stroke='%231D9BB5' stroke-width='4'/><rect x='206' y='40' width='188' height='270' rx='18' fill='%23020617'/><path d='M250 40 h100 v10 h-100 z' fill='%231e293b'/><rect x='220' y='75' width='160' height='200' rx='10' fill='%231D9BB5' fill-opacity='0.15' stroke='%231D9BB5' stroke-width='2' stroke-dasharray='4,4'/><text x='300' y='160' font-family='sans-serif' font-weight='900' font-size='22' fill='%231D9BB5' text-anchor='middle'>INCELL (JH)</text><text x='300' y='185' font-family='sans-serif' font-weight='700' font-size='12' fill='%2394a3b8' text-anchor='middle'>HIGH BRIGHTNESS DISPLAY</text><rect x='225' y='295' width='150' height='24' rx='6' fill='%231D9BB5'/><text x='300' y='311' font-family='sans-serif' font-weight='800' font-size='11' fill='%23ffffff' text-anchor='middle'>JH IC CHIPSET FLEX</text></svg>";
 
@@ -93,6 +93,13 @@ export const PartsProductsSection: React.FC<PartsProductsSectionProps> = ({
   };
 
   useEffect(() => {
+    // Hydrate from IndexedDB for high-capacity offline storage
+    hydrateCatalogFromIdb().then((idbParts) => {
+      if (idbParts && idbParts.length > 0) {
+        setParts(mergeWithStoredParts(INITIAL_PARTS));
+      }
+    });
+
     fetchParts();
 
     // Listen for catalog updates dispatched from Admin Inventory in real-time
@@ -380,7 +387,7 @@ export const PartsProductsSection: React.FC<PartsProductsSectionProps> = ({
 
               const displayImage = isScreen
                 ? getScreenDisplayImage(part, currentTier)
-                : (part.imageUrl || part.image_url);
+                : sanitizeImageUrl(part.imageUrl || part.image_url, part.id, 'main');
 
               const whatsappText = isOutOfStock
                 ? `Hello iPhone Lab UG, I am inquiring about: ${part.name} (${

@@ -402,12 +402,12 @@ export const INITIAL_PARTS: PartProduct[] = [
     "compatibilityRange": "iPhone 14",
     "stockStatus": "In Stock",
     "description": "Original color temperature calibration display.",
-    "imageUrl": "/images/parts/part-screen-14-main.jpg",
-    "incellImageUrl": "/images/parts/part-screen-14-incell.jpg",
-    "oledImageUrl": "/images/parts/part-screen-14-oled.jpg",
-    "image_url": "/uploads/upload_1787042608918_iphone_14_dd_oled_catalogue.png",
-    "incell_image_url": "/uploads/upload_1787043279344_iPhone_14_INCELL.jpg",
-    "oled_image_url": "/uploads/upload_1787042608918_iphone_14_dd_oled_catalogue.png"
+    "imageUrl": "/images/custom/custom_1787352229676_iphone_14_dd_oled_catalogue.webp",
+    "incellImageUrl": "/images/custom/custom_1787352219945_iphone_14_jh_incell_catalogue.webp",
+    "oledImageUrl": "/images/custom/custom_1787352229676_iphone_14_dd_oled_catalogue.webp",
+    "image_url": "/images/custom/custom_1787352229676_iphone_14_dd_oled_catalogue.webp",
+    "incell_image_url": "/images/custom/custom_1787352219945_iphone_14_jh_incell_catalogue.webp",
+    "oled_image_url": "/images/custom/custom_1787352229676_iphone_14_dd_oled_catalogue.webp"
   },
   {
     "id": "part-screen-14plus",
@@ -419,12 +419,12 @@ export const INITIAL_PARTS: PartProduct[] = [
     "compatibilityRange": "iPhone 14 Plus",
     "stockStatus": "In Stock",
     "description": "DD OLED display unit with vibrant color precision.",
-    "imageUrl": "/images/parts/part-screen-14plus-main.jpg",
+    "imageUrl": "/images/custom/custom_1787352556318_iphone_14_plus_dd_oled_catalogue.webp",
     "incellImageUrl": "/images/parts/part-screen-14plus-main.jpg",
-    "oledImageUrl": "/images/parts/part-screen-14plus-oled.jpg",
-    "image_url": "/uploads/upload_1787042679689_iphone_14_plus_dd_oled_catalogue.png",
-    "incell_image_url": "",
-    "oled_image_url": "/uploads/upload_1787042679689_iphone_14_plus_dd_oled_catalogue.png"
+    "oledImageUrl": "/images/custom/custom_1787352556318_iphone_14_plus_dd_oled_catalogue.webp",
+    "image_url": "/images/custom/custom_1787352556318_iphone_14_plus_dd_oled_catalogue.webp",
+    "incell_image_url": "/images/parts/part-screen-14plus-main.jpg",
+    "oled_image_url": "/images/custom/custom_1787352556318_iphone_14_plus_dd_oled_catalogue.webp"
   },
   {
     "id": "part-screen-14pro",
@@ -437,12 +437,12 @@ export const INITIAL_PARTS: PartProduct[] = [
     "compatibilityRange": "iPhone 14 Pro",
     "stockStatus": "In Stock",
     "description": "Dynamic Island compatible high-brightness display.",
-    "imageUrl": "/images/parts/part-screen-14pro-main.jpg",
-    "incellImageUrl": "/images/parts/part-screen-14pro-incell.jpg",
-    "oledImageUrl": "/images/parts/part-screen-14pro-oled.jpg",
-    "image_url": "/uploads/upload_1787042905055_14_Pro_DD_OLED.jpg",
-    "incell_image_url": "/uploads/upload_1787042894421_14_Pro_INCELL.jpg",
-    "oled_image_url": "/uploads/upload_1787042905055_14_Pro_DD_OLED.jpg"
+    "imageUrl": "/images/custom/custom_1787352639814_14_Pro_DD_OLED.jpg",
+    "incellImageUrl": "/images/custom/custom_1787352626039_14_Pro_INCELL.jpg",
+    "oledImageUrl": "/images/custom/custom_1787352639814_14_Pro_DD_OLED.jpg",
+    "image_url": "/images/custom/custom_1787352639814_14_Pro_DD_OLED.jpg",
+    "incell_image_url": "/images/custom/custom_1787352626039_14_Pro_INCELL.jpg",
+    "oled_image_url": "/images/custom/custom_1787352639814_14_Pro_DD_OLED.jpg"
   },
   {
     "id": "part-screen-14promax",
@@ -455,12 +455,12 @@ export const INITIAL_PARTS: PartProduct[] = [
     "compatibilityRange": "iPhone 14 Pro Max",
     "stockStatus": "In Stock",
     "description": "Dynamic Island compatible high-brightness display.",
-    "imageUrl": "/images/parts/part-screen-14promax-main.jpg",
-    "incellImageUrl": "/images/parts/part-screen-14promax-incell.jpg",
-    "oledImageUrl": "/images/parts/part-screen-14promax-oled.jpg",
-    "image_url": "/uploads/upload_1787043000066_iphone_14_pro_max_dd_oled_catalogue.png",
-    "incell_image_url": "/uploads/upload_1787042969488_iphone_14_pro_max_jh_incell_catalogue.png",
-    "oled_image_url": "/uploads/upload_1787043000066_iphone_14_pro_max_dd_oled_catalogue.png"
+    "imageUrl": "/images/custom/custom_1787352759733_iphone_14_pro_max_dd_oled_catalogue.webp",
+    "incellImageUrl": "/images/custom/custom_1787352756146_iphone_14_pro_max_jh_incell_catalogue.webp",
+    "oledImageUrl": "/images/custom/custom_1787352759733_iphone_14_pro_max_dd_oled_catalogue.webp",
+    "image_url": "/images/custom/custom_1787352759733_iphone_14_pro_max_dd_oled_catalogue.webp",
+    "incell_image_url": "/images/custom/custom_1787352756146_iphone_14_pro_max_jh_incell_catalogue.webp",
+    "oled_image_url": "/images/custom/custom_1787352759733_iphone_14_pro_max_dd_oled_catalogue.webp"
   },
   {
     "id": "part-screen-15",
@@ -473,12 +473,12 @@ export const INITIAL_PARTS: PartProduct[] = [
     "compatibilityRange": "iPhone 15",
     "stockStatus": "In Stock",
     "description": "Dynamic Island Super Retina XDR replacement screen.",
-    "incellImageUrl": "/images/parts/part-screen-15-incell.jpg",
-    "incell_image_url": "/uploads/upload_1787043053837_15_INCELL.jpg",
-    "oledImageUrl": "/images/parts/part-screen-15-oled.jpg",
-    "oled_image_url": "/uploads/upload_1787043072501_15_DD_OLED.jpg",
-    "imageUrl": "/images/parts/part-screen-15-main.jpg",
-    "image_url": "/uploads/upload_1787043072501_15_DD_OLED.jpg"
+    "imageUrl": "/images/custom/custom_1787352931747_15_DD_OLED.jpg",
+    "incellImageUrl": "/images/custom/custom_1787352919557_15_INCELL.jpg",
+    "oledImageUrl": "/images/custom/custom_1787352931747_15_DD_OLED.jpg",
+    "image_url": "/images/custom/custom_1787352931747_15_DD_OLED.jpg",
+    "incell_image_url": "/images/custom/custom_1787352919557_15_INCELL.jpg",
+    "oled_image_url": "/images/custom/custom_1787352931747_15_DD_OLED.jpg"
   },
   {
     "id": "part-screen-15plus",
@@ -491,29 +491,30 @@ export const INITIAL_PARTS: PartProduct[] = [
     "compatibilityRange": "iPhone 15 Plus",
     "stockStatus": "In Stock",
     "description": "Dynamic Island Super Retina XDR replacement screen.",
-    "imageUrl": "/images/parts/part-screen-15plus-main.jpg",
-    "incellImageUrl": "/images/parts/part-screen-15plus-incell.jpg",
-    "oledImageUrl": "/images/parts/part-screen-15plus-oled.jpg",
-    "image_url": "/uploads/upload_1787043117898_15_Plus_DD_OLED.jpg",
-    "incell_image_url": "/uploads/upload_1787043139309_iphone_15_plus_jh_incell_catalogue.png",
-    "oled_image_url": "/uploads/upload_1787043117898_15_Plus_DD_OLED.jpg"
+    "imageUrl": "/images/custom/custom_1787353306053_15_Plus_DD_OLED.jpg",
+    "incellImageUrl": "/images/custom/custom_1787353324543_iphone_15_plus_jh_incell_catalogue.webp",
+    "oledImageUrl": "/images/custom/custom_1787353306053_15_Plus_DD_OLED.jpg",
+    "image_url": "/images/custom/custom_1787353306053_15_Plus_DD_OLED.jpg",
+    "incell_image_url": "/images/custom/custom_1787353324543_iphone_15_plus_jh_incell_catalogue.webp",
+    "oled_image_url": "/images/custom/custom_1787353306053_15_Plus_DD_OLED.jpg"
   },
   {
     "id": "part-screen-15pro",
     "name": "iPhone 15 Pro Screen",
     "category": "Screens",
-    "screenTier": "OLED",
+    "screenTier": "Both",
+    "incellPriceUGX": 280000,
     "oledPriceUGX": 350000,
     "priceUGX": 350000,
     "compatibilityRange": "iPhone 15 Pro",
     "stockStatus": "In Stock",
     "description": "Top-tier DD OLED replacement display.",
-    "incellImageUrl": "/images/parts/part-screen-15pro-main.jpg",
-    "incell_image_url": "/uploads/upload_1787043229885_iPhone_15_Pro_INCELL.jpg",
-    "oledImageUrl": "/images/parts/part-screen-15pro-oled.jpg",
-    "oled_image_url": "/uploads/upload_1787043246738_15_Pro_DD_OLED.jpg",
-    "imageUrl": "/images/parts/part-screen-15pro-main.jpg",
-    "image_url": "/uploads/upload_1787043246738_15_Pro_DD_OLED.jpg"
+    "imageUrl": "/images/custom/custom_1787353403812_15_Pro_DD_OLED.jpg",
+    "incellImageUrl": "/images/custom/custom_1787353382882_iPhone_15_Pro_INCELL.jpg",
+    "oledImageUrl": "/images/custom/custom_1787353403812_15_Pro_DD_OLED.jpg",
+    "image_url": "/images/custom/custom_1787353403812_15_Pro_DD_OLED.jpg",
+    "incell_image_url": "/images/custom/custom_1787353382882_iPhone_15_Pro_INCELL.jpg",
+    "oled_image_url": "/images/custom/custom_1787353403812_15_Pro_DD_OLED.jpg"
   },
   {
     "id": "part-screen-15promax",
@@ -526,12 +527,12 @@ export const INITIAL_PARTS: PartProduct[] = [
     "compatibilityRange": "iPhone 15 Pro Max",
     "stockStatus": "In Stock",
     "description": "Top-tier DD OLED or Incell JH display with peak brightness.",
-    "imageUrl": "/images/parts/part-screen-15promax-main.jpg",
-    "incellImageUrl": "/images/parts/part-screen-15promax-incell.jpg",
-    "oledImageUrl": "/images/parts/part-screen-15promax-oled.jpg",
-    "image_url": "/uploads/upload_1787043333419_15_Pro_Max_DD_OLED.jpg",
-    "incell_image_url": "/uploads/upload_1787043365026_iphone_15_pro_max_jh_incell_catalogue.png",
-    "oled_image_url": "/uploads/upload_1787043333419_15_Pro_Max_DD_OLED.jpg"
+    "imageUrl": "/images/custom/custom_1787353567001_15_Pro_Max_DD_OLED.jpg",
+    "incellImageUrl": "/images/custom/custom_1787353583166_iphone_15_pro_max_jh_incell_catalogue.webp",
+    "oledImageUrl": "/images/custom/custom_1787353567001_15_Pro_Max_DD_OLED.jpg",
+    "image_url": "/images/custom/custom_1787353567001_15_Pro_Max_DD_OLED.jpg",
+    "incell_image_url": "/images/custom/custom_1787353583166_iphone_15_pro_max_jh_incell_catalogue.webp",
+    "oled_image_url": "/images/custom/custom_1787353567001_15_Pro_Max_DD_OLED.jpg"
   },
   {
     "id": "part-screen-16",
@@ -543,12 +544,12 @@ export const INITIAL_PARTS: PartProduct[] = [
     "compatibilityRange": "iPhone 16",
     "stockStatus": "In Stock",
     "description": "Next-gen DD OLED display module engineered for iPhone 16.",
-    "imageUrl": "/images/parts/part-screen-16-main.jpg",
+    "imageUrl": "/images/custom/custom_1787353610359_iphone_16_dd_oled_catalogue.webp",
     "incellImageUrl": "/images/parts/part-screen-16-main.jpg",
-    "oledImageUrl": "/images/parts/part-screen-16-oled.jpg",
-    "image_url": "/uploads/upload_1787043449680_iphone_16_dd_oled_catalogue.png",
-    "incell_image_url": "",
-    "oled_image_url": "/uploads/upload_1787043449680_iphone_16_dd_oled_catalogue.png"
+    "oledImageUrl": "/images/custom/custom_1787353610359_iphone_16_dd_oled_catalogue.webp",
+    "image_url": "/images/custom/custom_1787353610359_iphone_16_dd_oled_catalogue.webp",
+    "incell_image_url": "/images/parts/part-screen-16-main.jpg",
+    "oled_image_url": "/images/custom/custom_1787353610359_iphone_16_dd_oled_catalogue.webp"
   },
   {
     "id": "part-screen-16pro",
@@ -560,12 +561,12 @@ export const INITIAL_PARTS: PartProduct[] = [
     "compatibilityRange": "iPhone 16 Pro",
     "stockStatus": "In Stock",
     "description": "Next-gen DD OLED display module engineered for iPhone 16 Pro.",
-    "imageUrl": "/images/parts/part-screen-16pro-main.jpg",
+    "imageUrl": "/images/custom/custom_1787353674456_iphone_16_pro_dd_oled_catalogue.webp",
     "incellImageUrl": "/images/parts/part-screen-16pro-main.jpg",
-    "oledImageUrl": "/images/parts/part-screen-16pro-oled.jpg",
-    "image_url": "/uploads/upload_1787043494734_iphone_16_pro_dd_oled_catalogue.png",
-    "incell_image_url": "",
-    "oled_image_url": "/uploads/upload_1787043494734_iphone_16_pro_dd_oled_catalogue.png"
+    "oledImageUrl": "/images/custom/custom_1787353674456_iphone_16_pro_dd_oled_catalogue.webp",
+    "image_url": "/images/custom/custom_1787353674456_iphone_16_pro_dd_oled_catalogue.webp",
+    "incell_image_url": "/images/parts/part-screen-16pro-main.jpg",
+    "oled_image_url": "/images/custom/custom_1787353674456_iphone_16_pro_dd_oled_catalogue.webp"
   },
   {
     "id": "part-screen-16promax",
@@ -577,12 +578,12 @@ export const INITIAL_PARTS: PartProduct[] = [
     "compatibilityRange": "iPhone 16 Pro Max",
     "stockStatus": "In Stock",
     "description": "Next-gen DD OLED display module engineered for iPhone 16 Pro Max.",
-    "imageUrl": "/images/parts/part-screen-16promax-main.jpg",
+    "imageUrl": "/images/custom/custom_1787353700083_iphone_16_pro_max_dd_oled_catalogue.webp",
     "incellImageUrl": "/images/parts/part-screen-16promax-main.jpg",
-    "oledImageUrl": "/images/parts/part-screen-16promax-oled.jpg",
-    "image_url": "/uploads/upload_1787043520497_iphone_16_pro_max_dd_oled_catalogue.png",
-    "incell_image_url": "",
-    "oled_image_url": "/uploads/upload_1787043520497_iphone_16_pro_max_dd_oled_catalogue.png"
+    "oledImageUrl": "/images/custom/custom_1787353700083_iphone_16_pro_max_dd_oled_catalogue.webp",
+    "image_url": "/images/custom/custom_1787353700083_iphone_16_pro_max_dd_oled_catalogue.webp",
+    "incell_image_url": "/images/parts/part-screen-16promax-main.jpg",
+    "oled_image_url": "/images/custom/custom_1787353700083_iphone_16_pro_max_dd_oled_catalogue.webp"
   },
   {
     "id": "part-screen-17pro",
@@ -594,12 +595,12 @@ export const INITIAL_PARTS: PartProduct[] = [
     "compatibilityRange": "iPhone 17 Pro",
     "stockStatus": "In Stock",
     "description": "Ultra-thin bezel DD OLED replacement display for iPhone 17 Pro.",
-    "imageUrl": "/images/parts/part-screen-17pro-main.jpg",
+    "imageUrl": "/images/custom/custom_1787353719528_iphone_17_pro_dd_oled_catalogue.webp",
     "incellImageUrl": "/images/parts/part-screen-17pro-main.jpg",
-    "oledImageUrl": "/images/parts/part-screen-17pro-oled.jpg",
-    "image_url": "/uploads/upload_1787043564071_iphone_17_pro_dd_oled_catalogue.png",
-    "incell_image_url": "",
-    "oled_image_url": "/uploads/upload_1787043564071_iphone_17_pro_dd_oled_catalogue.png"
+    "oledImageUrl": "/images/custom/custom_1787353719528_iphone_17_pro_dd_oled_catalogue.webp",
+    "image_url": "/images/custom/custom_1787353719528_iphone_17_pro_dd_oled_catalogue.webp",
+    "incell_image_url": "/images/parts/part-screen-17pro-main.jpg",
+    "oled_image_url": "/images/custom/custom_1787353719528_iphone_17_pro_dd_oled_catalogue.webp"
   },
   {
     "id": "part-screen-17promax",
@@ -611,12 +612,12 @@ export const INITIAL_PARTS: PartProduct[] = [
     "compatibilityRange": "iPhone 17 Pro Max",
     "stockStatus": "In Stock",
     "description": "Ultra-thin bezel DD OLED replacement display for iPhone 17 Pro Max.",
+    "imageUrl": "/images/custom/custom_1787353747730_17_Pro_Max_DD_OLED.jpg",
     "incellImageUrl": "/images/parts/part-screen-17promax-main.jpg",
-    "incell_image_url": "",
-    "oledImageUrl": "/images/parts/part-screen-17promax-oled.jpg",
-    "oled_image_url": "/uploads/upload_1787043593453_17_Pro_Max_DD_OLED.jpg",
-    "imageUrl": "/images/parts/part-screen-17promax-main.jpg",
-    "image_url": "/uploads/upload_1787043593453_17_Pro_Max_DD_OLED.jpg"
+    "oledImageUrl": "/images/custom/custom_1787353747730_17_Pro_Max_DD_OLED.jpg",
+    "image_url": "/images/custom/custom_1787353747730_17_Pro_Max_DD_OLED.jpg",
+    "incell_image_url": "/images/parts/part-screen-17promax-main.jpg",
+    "oled_image_url": "/images/custom/custom_1787353747730_17_Pro_Max_DD_OLED.jpg"
   },
   {
     "id": "part-bat-x",
