@@ -90,16 +90,19 @@ export const Navbar: React.FC<NavbarProps> = ({
           {/* Logo Section */}
           <button
             onClick={() => handleNavClick('hero')}
-            className="flex items-center gap-2 text-left focus:outline-none group"
-            aria-label="iPhone Lab UG Home"
+            className="flex items-center text-left focus:outline-none focus-visible:ring-2 focus-visible:ring-[#1D9BB5] rounded-xl p-1 -ml-1 group"
+            aria-label="iPhone Lab Home"
           >
-            <Logo isDarkMode={isDarkMode} className="h-9 sm:h-11 my-auto" showTagline={true} />
+            <Logo isDarkMode={isDarkMode} className="h-10 sm:h-12 my-auto" />
           </button>
 
           {/* Desktop Navigation Links */}
-          <nav className={`hidden lg:flex items-center gap-1 xl:gap-2 p-1.5 rounded-2xl border backdrop-blur-md ${
-            isDarkMode ? 'bg-white/[0.03] border-white/10' : 'bg-slate-100/80 border-slate-200'
-          }`}>
+          <nav
+            aria-label="Primary Navigation"
+            className={`hidden lg:flex items-center gap-1 xl:gap-2 p-1.5 rounded-2xl border backdrop-blur-md ${
+              isDarkMode ? 'bg-white/[0.03] border-white/10' : 'bg-slate-100/80 border-slate-200'
+            }`}
+          >
             {navItems.map((item) => {
               const Icon = item.icon;
               const isActive = activeSection === item.id;
@@ -107,7 +110,8 @@ export const Navbar: React.FC<NavbarProps> = ({
                 <button
                   key={item.id}
                   onClick={() => handleNavClick(item.id)}
-                  className={`px-3.5 py-2 rounded-xl text-xs sm:text-sm font-bold transition-all flex items-center gap-1.5 ${
+                  aria-current={isActive ? 'page' : undefined}
+                  className={`px-3.5 py-2.5 rounded-xl text-xs sm:text-sm font-bold transition-all flex items-center gap-1.5 ${
                     isActive
                       ? 'text-white bg-[#1D9BB5] shadow-lg shadow-[#1D9BB5]/30'
                       : isDarkMode
@@ -126,52 +130,62 @@ export const Navbar: React.FC<NavbarProps> = ({
           <div className="hidden lg:flex items-center gap-3">
             {/* Smooth Theme Switcher Segmented Control */}
             {onSetTheme ? (
-              <div className={`flex items-center p-1 rounded-2xl border backdrop-blur-md ${
-                isDarkMode ? 'bg-white/5 border-white/10' : 'bg-slate-200/80 border-slate-300'
-              }`}>
+              <div
+                role="radiogroup"
+                aria-label="Theme Selection"
+                className={`flex items-center p-1 rounded-2xl border backdrop-blur-md ${
+                  isDarkMode ? 'bg-white/5 border-white/10' : 'bg-slate-200/80 border-slate-300'
+                }`}
+              >
                 <button
                   onClick={() => onSetTheme('light')}
-                  className={`p-1.5 rounded-xl transition-all flex items-center gap-1 text-xs font-semibold ${
+                  role="radio"
+                  aria-checked={themeMode === 'light'}
+                  className={`p-2 min-w-[36px] min-h-[36px] rounded-xl transition-all flex items-center justify-center text-xs font-semibold ${
                     themeMode === 'light'
                       ? 'bg-white text-slate-900 shadow-md font-bold'
                       : isDarkMode ? 'text-slate-400 hover:text-white' : 'text-slate-600 hover:text-slate-900'
                   }`}
                   title="Light Mode"
-                  aria-label="Light Mode"
+                  aria-label="Switch to Light Mode"
                 >
-                  <Sun className="w-3.5 h-3.5 text-amber-500" />
+                  <Sun className="w-4 h-4 text-amber-500" />
                 </button>
 
                 <button
                   onClick={() => onSetTheme('dark')}
-                  className={`p-1.5 rounded-xl transition-all flex items-center gap-1 text-xs font-semibold ${
+                  role="radio"
+                  aria-checked={themeMode === 'dark'}
+                  className={`p-2 min-w-[36px] min-h-[36px] rounded-xl transition-all flex items-center justify-center text-xs font-semibold ${
                     themeMode === 'dark'
                       ? 'bg-slate-800 text-white shadow-md font-bold'
                       : isDarkMode ? 'text-slate-400 hover:text-white' : 'text-slate-600 hover:text-slate-900'
                   }`}
                   title="Dark Mode"
-                  aria-label="Dark Mode"
+                  aria-label="Switch to Dark Mode"
                 >
-                  <Moon className="w-3.5 h-3.5 text-indigo-400" />
+                  <Moon className="w-4 h-4 text-indigo-400" />
                 </button>
 
                 <button
                   onClick={() => onSetTheme('system')}
-                  className={`p-1.5 rounded-xl transition-all flex items-center gap-1 text-xs font-semibold ${
+                  role="radio"
+                  aria-checked={themeMode === 'system'}
+                  className={`p-2 min-w-[36px] min-h-[36px] rounded-xl transition-all flex items-center justify-center text-xs font-semibold ${
                     themeMode === 'system'
                       ? 'bg-[#1D9BB5] text-white shadow-md font-bold'
                       : isDarkMode ? 'text-slate-400 hover:text-white' : 'text-slate-600 hover:text-slate-900'
                   }`}
                   title="System Theme"
-                  aria-label="System Theme"
+                  aria-label="Switch to System Theme"
                 >
-                  <Monitor className="w-3.5 h-3.5" />
+                  <Monitor className="w-4 h-4" />
                 </button>
               </div>
             ) : (
               <button
                 onClick={onToggleTheme}
-                className={`p-2.5 rounded-full transition-all border ${
+                className={`p-2.5 rounded-full transition-all border min-w-[44px] min-h-[44px] flex items-center justify-center ${
                   isDarkMode
                     ? 'bg-white/5 border-white/10 text-yellow-400 hover:bg-white/10 hover:border-yellow-400/50'
                     : 'bg-slate-100 border-slate-300 text-slate-700 hover:bg-slate-200'
@@ -188,7 +202,8 @@ export const Navbar: React.FC<NavbarProps> = ({
               href={whatsappUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="glow-btn text-white font-extrabold px-4 py-2.5 rounded-xl text-xs sm:text-sm flex items-center gap-2"
+              aria-label="Contact iPhone Lab via WhatsApp (opens in new tab)"
+              className="glow-btn text-white font-extrabold px-4 py-2.5 rounded-xl text-xs sm:text-sm flex items-center gap-2 min-h-[44px]"
             >
               <span>WhatsApp Us</span>
             </a>
@@ -197,26 +212,36 @@ export const Navbar: React.FC<NavbarProps> = ({
           {/* Mobile & Tablet Toggle Controls */}
           <div className="flex lg:hidden items-center gap-2">
             {onSetTheme ? (
-              <div className={`flex items-center p-1 rounded-xl border ${
-                isDarkMode ? 'bg-slate-800 border-slate-700' : 'bg-slate-200 border-slate-300'
-              }`}>
+              <div
+                role="radiogroup"
+                aria-label="Theme Selection"
+                className={`flex items-center p-1 rounded-xl border ${
+                  isDarkMode ? 'bg-slate-800 border-slate-700' : 'bg-slate-200 border-slate-300'
+                }`}
+              >
                 <button
                   onClick={() => onSetTheme('light')}
-                  className={`p-1.5 rounded-lg ${themeMode === 'light' ? 'bg-white text-slate-900' : 'text-slate-400'}`}
+                  role="radio"
+                  aria-checked={themeMode === 'light'}
+                  className={`p-2 min-h-[40px] min-w-[40px] flex items-center justify-center rounded-lg ${themeMode === 'light' ? 'bg-white text-slate-900' : 'text-slate-400'}`}
                   aria-label="Light mode"
                 >
                   <Sun className="w-4 h-4 text-amber-500" />
                 </button>
                 <button
                   onClick={() => onSetTheme('dark')}
-                  className={`p-1.5 rounded-lg ${themeMode === 'dark' ? 'bg-slate-900 text-white' : 'text-slate-400'}`}
+                  role="radio"
+                  aria-checked={themeMode === 'dark'}
+                  className={`p-2 min-h-[40px] min-w-[40px] flex items-center justify-center rounded-lg ${themeMode === 'dark' ? 'bg-slate-900 text-white' : 'text-slate-400'}`}
                   aria-label="Dark mode"
                 >
                   <Moon className="w-4 h-4 text-indigo-400" />
                 </button>
                 <button
                   onClick={() => onSetTheme('system')}
-                  className={`p-1.5 rounded-lg ${themeMode === 'system' ? 'bg-[#1D9BB5] text-white' : 'text-slate-400'}`}
+                  role="radio"
+                  aria-checked={themeMode === 'system'}
+                  className={`p-2 min-h-[40px] min-w-[40px] flex items-center justify-center rounded-lg ${themeMode === 'system' ? 'bg-[#1D9BB5] text-white' : 'text-slate-400'}`}
                   aria-label="System mode"
                 >
                   <Monitor className="w-4 h-4" />
@@ -225,7 +250,7 @@ export const Navbar: React.FC<NavbarProps> = ({
             ) : (
               <button
                 onClick={onToggleTheme}
-                className={`p-2 rounded-lg ${
+                className={`p-2.5 min-h-[44px] min-w-[44px] flex items-center justify-center rounded-lg ${
                   isDarkMode ? 'bg-slate-800 text-yellow-400' : 'bg-slate-100 text-slate-800'
                 }`}
                 aria-label="Toggle theme"
@@ -236,10 +261,12 @@ export const Navbar: React.FC<NavbarProps> = ({
 
             <button
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className={`p-2 rounded-lg border ${
-                isDarkMode ? 'border-slate-700 text-white' : 'border-slate-300 text-slate-800'
+              className={`p-2.5 min-h-[44px] min-w-[44px] flex items-center justify-center rounded-lg border ${
+                isDarkMode ? 'border-slate-700 text-white bg-slate-800/80' : 'border-slate-300 text-slate-800 bg-white'
               }`}
-              aria-label="Toggle menu"
+              aria-expanded={mobileMenuOpen}
+              aria-controls="mobile-nav-drawer"
+              aria-label={mobileMenuOpen ? "Close navigation menu" : "Open navigation menu"}
             >
               {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
             </button>
@@ -249,9 +276,13 @@ export const Navbar: React.FC<NavbarProps> = ({
 
       {/* Mobile Drawer Navigation */}
       {mobileMenuOpen && (
-        <div className={`lg:hidden border-b px-4 py-6 space-y-3 transition-colors ${
-          isDarkMode ? 'bg-[#0A0A0A] border-white/10 text-white' : 'bg-white border-slate-200 text-slate-900'
-        }`}>
+        <nav
+          id="mobile-nav-drawer"
+          aria-label="Mobile Navigation"
+          className={`lg:hidden border-b px-4 py-6 space-y-3 transition-colors shadow-2xl ${
+            isDarkMode ? 'bg-[#0A0E17] border-white/10 text-white' : 'bg-white border-slate-200 text-slate-900'
+          }`}
+        >
           {navItems.map((item) => {
             const Icon = item.icon;
             const isActive = activeSection === item.id;
@@ -259,7 +290,8 @@ export const Navbar: React.FC<NavbarProps> = ({
               <button
                 key={item.id}
                 onClick={() => handleNavClick(item.id)}
-                className={`w-full px-4 py-3 rounded-xl text-sm font-bold flex items-center gap-3 transition-all ${
+                aria-current={isActive ? 'page' : undefined}
+                className={`w-full px-4 py-3.5 min-h-[48px] rounded-xl text-base font-bold flex items-center gap-3 transition-all ${
                   isActive
                     ? 'bg-[#1D9BB5] text-white shadow-lg'
                     : isDarkMode
@@ -267,7 +299,7 @@ export const Navbar: React.FC<NavbarProps> = ({
                     : 'bg-slate-100 hover:bg-slate-200 text-slate-800'
                 }`}
               >
-                <Icon className={`w-4 h-4 ${isActive ? 'text-white' : 'text-[#1D9BB5]'}`} />
+                <Icon className={`w-5 h-5 ${isActive ? 'text-white' : 'text-[#1D9BB5]'}`} />
                 <span>{item.label}</span>
               </button>
             );
@@ -278,12 +310,13 @@ export const Navbar: React.FC<NavbarProps> = ({
               href={whatsappUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="w-full glow-btn text-white font-extrabold py-3 px-4 rounded-xl text-sm flex items-center justify-center gap-2"
+              aria-label="Chat on WhatsApp with iPhone Lab (opens in new tab)"
+              className="w-full glow-btn text-white font-extrabold py-3.5 px-4 min-h-[48px] rounded-xl text-base flex items-center justify-center gap-2"
             >
               <span>WhatsApp Technical Desk</span>
             </a>
           </div>
-        </div>
+        </nav>
       )}
     </header>
   );
