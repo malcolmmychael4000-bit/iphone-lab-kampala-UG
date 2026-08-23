@@ -8,6 +8,7 @@ import backGlassImg from '../assets/images/hero_laser_backglass.jpg';
 interface HeroSlide {
   id: string;
   src: string;
+  fallbackSrc: string;
   title: string;
   subtitle: string;
 }
@@ -16,18 +17,21 @@ const HERO_SLIDES: HeroSlide[] = [
   {
     id: 'clean-shop',
     src: cleanShopImg,
+    fallbackSrc: '/images/hero-clean-shop.jpg',
     title: 'Clean Diagnostic & Assembly Lab',
     subtitle: 'Anti-static benches and precision toolsets',
   },
   {
     id: 'microsoldering',
     src: microSolderingImg,
+    fallbackSrc: '/images/hero-microsoldering.jpg',
     title: 'Micro-Soldering Workstation',
     subtitle: 'Under-microscope logic board & IC repair',
   },
   {
     id: 'backglass',
     src: backGlassImg,
+    fallbackSrc: '/images/hero-backglass.jpg',
     title: 'Laser Precision Back Glass Specialist',
     subtitle: 'Safe automated laser glue separation',
   },
@@ -78,6 +82,12 @@ export const Hero: React.FC<HeroProps> = ({ onNavigate, isDarkMode: _isDarkMode 
           <img
             key={slide.id}
             src={slide.src}
+            onError={(e) => {
+              const target = e.currentTarget;
+              if (target.src !== slide.fallbackSrc && !target.src.endsWith(slide.fallbackSrc)) {
+                target.src = slide.fallbackSrc;
+              }
+            }}
             alt={`iPhone Lab Workshop - ${slide.title}`}
             width={1600}
             height={900}
