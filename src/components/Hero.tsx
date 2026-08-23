@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { motion } from 'motion/react';
 import { Wrench, Package, ShieldCheck, Zap, ChevronRight, MapPin, Award, Cpu, Camera } from 'lucide-react';
-import cleanShopImg from '../assets/images/hero_clean_lab_opt.webp';
-import microSolderingImg from '../assets/images/hero_microsoldering_opt.webp';
-import backGlassImg from '../assets/images/hero_laser_backglass_opt.webp';
+import cleanShopImg from '../assets/images/hero_clean_lab.jpg';
+import microSolderingImg from '../assets/images/hero_microsoldering.jpg';
+import backGlassImg from '../assets/images/hero_laser_backglass.jpg';
 
 interface HeroSlide {
   id: string;
