@@ -96,21 +96,19 @@ export const Hero: React.FC<HeroProps> = ({ onNavigate, isDarkMode: _isDarkMode 
             decoding="async"
             className={`absolute inset-0 w-full h-full object-cover object-center pointer-events-none transition-opacity duration-1000 ease-in-out ${
               idx === currentBgIndex
-                ? 'opacity-85 scale-100'
+                ? 'opacity-90 scale-100'
                 : 'opacity-0 scale-100 pointer-events-none'
             }`}
             referrerPolicy="no-referrer"
           />
         ))}
 
-        {/* Lightweight Vignette for High Text Legibility & Preserved Photo Vibrancy */}
-        <div className="absolute inset-0 bg-[#0A0E17]/45 pointer-events-none" />
-        <div className="absolute inset-0 bg-gradient-to-t from-[#0A0E17] via-transparent to-[#0A0E17]/80 pointer-events-none" />
-        <div className="absolute inset-0 bg-gradient-to-b from-[#0A0E17]/80 via-transparent to-[#0A0E17] pointer-events-none" />
+        {/* Cinematic Vignette for High Text Legibility & Crisp Lab Photo Visibility */}
+        <div className="absolute inset-0 bg-gradient-to-b from-[#0A0E17]/85 via-[#0A0E17]/50 to-[#0A0E17]/95 pointer-events-none" />
 
         {/* Ambient Subtle Lab Glow Highlights */}
-        <div className="absolute -top-32 -left-32 w-96 h-96 bg-[#1D9BB5]/20 rounded-full blur-3xl pointer-events-none" />
-        <div className="absolute -bottom-32 -right-32 w-96 h-96 bg-[#1F3864]/25 rounded-full blur-3xl pointer-events-none" />
+        <div className="absolute -top-32 -left-32 w-96 h-96 bg-[#1D9BB5]/25 rounded-full blur-3xl pointer-events-none" />
+        <div className="absolute -bottom-32 -right-32 w-96 h-96 bg-[#1F3864]/30 rounded-full blur-3xl pointer-events-none" />
       </div>
 
       {/* Main Content Container */}
